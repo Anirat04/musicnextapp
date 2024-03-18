@@ -1,5 +1,8 @@
+"use client"
 import courseData from "@/data/music-courses.json"
 import Link from "next/link";
+import { BackgroundGradient } from "./ui/background-gradient";
+import Image from "next/image";
 
 interface Course {
     id: number,
@@ -9,12 +12,12 @@ interface Course {
     price: number,
     instructor: string,
     isFeatured: boolean,
-    // image: "/courses/guitar.jpg"
+    image: string,
 }
 
 
 const FeaturedCourses = () => {
-    const featuredCourses = courseData.courses.filter((course:Course) => course.isFeatured);
+    const featuredCourses = courseData.courses.filter((course: Course) => course.isFeatured);
     console.log(featuredCourses);
 
     return (
@@ -27,9 +30,19 @@ const FeaturedCourses = () => {
             </div>
             <div className="mt-10 mx-8">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-center">
-                    {featuredCourses.map((course:Course) => (
+                    {featuredCourses.map((course: Course) => (
                         <div key={course.id} className="flex justify-center">
-                            <p>test</p>
+                            <BackgroundGradient className="rounded-[22px] max-w-sm h-full bg-white dark:bg-zinc-900">
+                                <div className="min-w-full h-full mx-auto shadow-md rounded-[22px] overflow-hidden">
+                                    <Image className="w-full h-56 object-cover object-center" width={200} height={200} src={course.image} alt={course.title} />
+                                    <div className="p-4">
+                                        <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">{course.title}</h2>
+                                        <p className="text-sm text-gray-600 dark:text-gray-300">Price: ${course.price}</p>
+                                        <p className="text-sm text-gray-600 dark:text-gray-300">Instructor: {course.instructor}</p>
+                                        <p className="text-gray-700 mt-2 dark:text-gray-400">{course.description}</p>
+                                    </div>
+                                </div>
+                            </BackgroundGradient>
                         </div>
                     ))}
                 </div>
